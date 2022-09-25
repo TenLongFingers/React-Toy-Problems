@@ -1,6 +1,7 @@
 import React, { Component } from "react";
+
+//constructor
 class EvenAndOdd extends Component {
-  //constructor function here
   constructor(props) {
     super(props);
     this.state = {
@@ -10,28 +11,44 @@ class EvenAndOdd extends Component {
     };
   }
 
-  handleChange = (val) => {
-    this.setState({ userInput: val });
-  };
+  //props
+  handleChange(value) {
+    this.setState({ userInput: value });
+  }
 
-  sortEvenOdds = (number) => {
-    //grab the input, loop through one by one, and push it into evenArray or oddArray
-  };
+  sortEvenOdds(userInput) {
+    let userInputArray = userInput.split(",");
+    let oddNums = [];
+    let evenNums = [];
+    for (let i = 0; i < userInputArray.length; i++) {
+      if (userInputArray[i] % 2 === 0) {
+        evenNums.push(userInputArray[i]);
+      } else {
+        oddNums.push(userInputArray[i]);
+      }
+    }
+    this.setState({ evenArray: evenNums, oddArray: oddNums });
+  }
 
+  //JSX
   render() {
     return (
       <div className="puzzleBox evenAndOddPB">
         <h4>Evens and Odds</h4>
         <input
           className="inputLine"
-          onChange={(e) => handleChange(e.target.value)}
+          onChange={(e) => this.handleChange(e.target.value)}
         />
-        <button className="confirmationButton">Split</button>
-        <span className="resultsBox" />
-        <span className="resultsBox" />
+        <button
+          className="confirmationButton"
+          onClick={() => this.sortEvenOdds(this.state.userInput)}
+        >
+          Split
+        </button>
+        <span className="resultsBox">{this.state.evenArray}</span>
+        <span className="resultsBox">{this.state.oddArray}</span>
       </div>
     );
-    //function that split evens into one array and odds into another (outside of the component? Can I add it at the bottom?)
   }
 }
 
